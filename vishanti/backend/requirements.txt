@@ -21,3 +21,39 @@ pypdf==6.21.2
 boto3==1.43.117
 httpx==0.28.1
 numpy==2.5.4
+
+[project]
+name = "vishanti-backend"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.159.1",
+    "uvicorn[standard]==0.54.0",
+    "SQLAlchemy[asyncio]==2.1.6",
+    "asyncpg==0.32.0",
+    "greenlet==3.5.6",
+    "pgvector==0.5.1",
+    "pydantic==2.14.1",
+    "pydantic-settings==2.16.1",
+    "email-validator==2.3.0",
+    "PyJWT==2.15.1",
+    "passlib[bcrypt]==1.7.4",
+    "bcrypt==4.0.1",
+    "slowapi==0.1.10",
+    "sse-starlette==3.5.0",
+    "celery[redis]==5.6.3",
+    "redis==6.4.0",
+    "python-multipart==0.0.32",
+    "pillow==13.0.0",
+    "pypdf==6.21.2",
+    "boto3==1.43.117",
+    "httpx==0.28.1",
+    "numpy==2.5.4",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
