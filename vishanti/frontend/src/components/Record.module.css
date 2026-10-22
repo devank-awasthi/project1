@@ -1,0 +1,127 @@
+.record {
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 24px;
+  position: sticky;
+  top: 16px;
+}
+@media (max-width: 900px) {
+  .record {
+    position: static;
+  }
+}
+.chain {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+.chain li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 14px;
+  padding-bottom: 18px;
+}
+/* the chain itself: a line from each node down to the next */
+.chain li:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 34px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--line);
+  transition: background 0.3s;
+}
+.node {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--sheet);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: var(--s-1);
+  position: relative;
+  z-index: 1;
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    color 0.25s;
+}
+.body {
+  min-width: 0;
+}
+.link,
+.seal {
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+.link code,
+.seal code {
+  font-family: var(--mono);
+  color: var(--ink-2);
+  background: var(--tint);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.seal {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.quote {
+  margin: 8px 0 0;
+  padding: 8px 12px;
+  border-left: 3px solid var(--line);
+  background: var(--paper);
+  white-space: pre-wrap;
+}
+.ok .node {
+  background: var(--verdigris);
+  border-color: var(--verdigris);
+  color: #fff;
+}
+.ok:not(:last-child)::before {
+  background: var(--verdigris);
+}
+.ok .seal code {
+  background: var(--verdigris-bg);
+  color: var(--verdigris);
+}
+.fail .node {
+  background: var(--seal);
+  border-color: var(--seal);
+  color: #fff;
+}
+.fail .seal code {
+  background: var(--seal-bg);
+  color: var(--seal);
+  text-decoration: line-through;
+}
+.problem {
+  color: var(--seal);
+  font-weight: 600;
+}
+.verdict {
+  margin: 16px 0 4px;
+  padding: 14px 16px;
+  border-radius: var(--r-sm);
+}
+.verdict ul {
+  margin: 8px 0 0;
+  padding-left: 1.2em;
+  font-size: var(--s-1);
+}
+.good {
+  background: var(--verdigris-bg);
+  color: #1d5a4e;
+}
+.bad {
+  background: var(--seal-bg);
+  color: var(--seal);
+}

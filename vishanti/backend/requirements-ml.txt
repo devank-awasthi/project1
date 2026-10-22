@@ -1,0 +1,6 @@
+# Local embedding + sentiment models (CPU only). Installed in the Docker image.
+# Without these the app falls back to hashing embeddings (see app/services/embeddings.py).
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+sentence-transformers>=3.0
+transformers>=4.40

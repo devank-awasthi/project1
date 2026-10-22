@@ -1,0 +1,83 @@
+.ladder {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column-reverse; /* level 1 at the bottom: complaints climb */
+  gap: 0;
+}
+.step {
+  --i: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  align-items: start;
+  margin-left: calc(var(--i) * 28px);
+  padding: 14px 16px 14px 14px;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  margin-bottom: 26px;
+}
+/* the riser between two steps: "deadline missed" */
+.step + .step::after {
+  content: "";
+  position: absolute;
+  left: 33px;
+  bottom: -27px;
+  height: 26px;
+  border-left: 2px dashed var(--seal);
+}
+.ladder > .step:first-child {
+  margin-bottom: 0;
+}
+.level {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: var(--tint);
+  color: var(--ink);
+}
+.sla {
+  display: block;
+  font-size: var(--s-1);
+  color: var(--ink-2);
+}
+.ombud {
+  border-style: dashed;
+  border-color: var(--seal);
+  background: transparent;
+}
+.ombud .level {
+  background: var(--seal-bg);
+  color: var(--seal);
+}
+.past {
+  opacity: 0.55;
+}
+.here {
+  border-color: var(--ink);
+  border-width: 2px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.here .level {
+  background: var(--ink);
+  color: #fff;
+}
+.ombud.here {
+  box-shadow: 4px 4px 0 var(--seal);
+  border-color: var(--seal);
+}
+.ombud.here .level {
+  background: var(--seal);
+  color: #fff;
+}
+@media (max-width: 520px) {
+  .step {
+    margin-left: calc(var(--i) * 12px);
+  }
+}

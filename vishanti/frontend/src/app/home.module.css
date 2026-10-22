@@ -1,0 +1,61 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: 56px;
+  align-items: start;
+  padding: 24px 0 56px;
+}
+.headline {
+  font-size: clamp(2.3rem, 5vw, var(--s5));
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  max-width: 14ch;
+  margin-bottom: 24px;
+}
+.lede {
+  font-size: var(--s1);
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 48ch;
+  margin-bottom: 28px;
+}
+.ladderBox {
+  padding-top: 8px;
+}
+.points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  padding: 40px 0;
+  border-top: 2px solid var(--ink);
+}
+.seal {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: 32px;
+  background: var(--ink);
+  color: #fff;
+  padding: 28px;
+  border-radius: var(--r-md);
+  margin-top: 16px;
+}
+.seal :global(.muted) {
+  color: #b9c6d2;
+}
+.seal :global(.mono) {
+  font-size: 1rem;
+  color: #9fe0cf;
+  margin-bottom: 6px;
+}
+.seal a {
+  color: #fff;
+}
+@media (max-width: 900px) {
+  .hero,
+  .points,
+  .seal {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
