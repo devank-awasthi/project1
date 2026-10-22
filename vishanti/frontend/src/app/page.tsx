@@ -4,6 +4,8 @@ import type { Meta } from "@/lib/api";
 import { serverGet } from "@/lib/server";
 import styles from "./home.module.css";
 
+export const dynamic = "force-dynamic";
+
 type Dash = {
   totals: { filed: number; open: number; resolved_or_closed: number };
   checkpoints: { day: string; root_hash: string; tickets: number; anchor_url: string | null }[];
@@ -35,7 +37,7 @@ export default async function Home() {
           </p>
         </div>
         <div className={styles.ladderBox}>
-          {meta ? <LadderPicker meta={meta} /> : <p className="muted">The server is not reachable right now.</p>}
+          {meta ? <LadderPicker meta={meta} /> : <p className="muted">The server is starting up. Refresh in a minute to see the escalation paths.</p>}
         </div>
       </section>
 

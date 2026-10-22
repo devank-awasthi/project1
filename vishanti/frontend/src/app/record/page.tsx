@@ -1,7 +1,7 @@
 import { serverGet } from "@/lib/server";
 import styles from "./record.module.css";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 type Dash = {
   generated_at: string;
@@ -32,8 +32,8 @@ function Hidden() {
 }
 
 export default async function PublicRecord() {
-  const d = await serverGet<Dash>("/api/public/dashboard", 60);
-  if (!d) return <p className="error">The public record could not be loaded. The server may be restarting.</p>;
+  const d = await serverGet<Dash>("/api/public/dashboard");
+  if (!d) return <p className="notice">The server is starting up. Refresh this page in about a minute.</p>;
   const max = Math.max(1, ...d.heatmap.flatMap((r) => r.cells.map((c) => c ?? 0)));
 
   return (

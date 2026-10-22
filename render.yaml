@@ -1,0 +1,45 @@
+# Render Blueprint: Postgres (pgvector) + Key Value (Redis) + API with Celery.
+databases:
+  - name: vishanti-db
+    plan: free
+    databaseName: vishanti
+    user: vishanti
+    postgresMajorVersion: '16'
+
+services:
+  - type: keyvalue
+    name: vishanti-redis
+    plan: free
+    ipAllowList: []
+    maxmemoryPolicy: noeviction
+
+  - type: web
+    name: vishanti-api
+    runtime: python
+    plan: free
+    rootDir: vishanti/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: sh start.sh
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: vishanti-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: vishanti-redis
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SEED_DEMO
+        value: "1"
+      - key: SLA_HOUR_SECONDS
+        value: "60"
+      - key: CORS_ORIGIN_REGEX
+        value: https://.*\.vercel\.app
+      - key: EMBEDDINGS_BACKEND
+        value: hashing
+      - key: BCRYPT_ROUNDS
+        value: "10"

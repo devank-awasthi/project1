@@ -1,7 +1,9 @@
 """Runtime configuration. Every value can be overridden with an environment variable."""
 
+import os
 from functools import lru_cache
 
+from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -67,10 +69,31 @@ class Settings(BaseSettings):
 
     # --- HTTP ----------------------------------------------------------------
     CORS_ORIGINS: str = "http://localhost:3000"
+    # e.g. https://.*\.vercel\.app to allow every Vercel deployment of the frontend
+    CORS_ORIGIN_REGEX: str | None = None
     ENABLE_RATE_LIMIT: bool = True
 
     # Celery runs tasks eagerly in tests.
     CELERY_ALWAYS_EAGER: bool = False
+
+    @field_validator("DATABASE_URL", "MIGRATE_DATABASE_URL", "READ_DATABASE_URL")
+    @classmethod
+    def _asyncpg_scheme(cls, v: str | None) -> str | None:
+        """Hosting providers (Render, Neon, Heroku) hand out postgres:// or
+        postgresql:// URLs; SQLAlchemy needs the asyncpg driver named."""
+        if v:
+            for prefix in ("postgres://", "postgresql://"):
+                if v.startswith(prefix):
+                    return "postgresql+asyncpg://" + v[len(prefix) :]
+        return v
+
+    @model_validator(mode="after")
+    def _public_url_on_render(self) -> "Settings":
+        # Render sets RENDER_EXTERNAL_URL (https://<service>.onrender.com).
+        external = os.getenv("RENDER_EXTERNAL_URL")
+        if external and "PUBLIC_API_URL" not in os.environ:
+            self.PUBLIC_API_URL = external.rstrip("/")
+        return self
 
     @property
     def cors_origins(self) -> list[str]:
